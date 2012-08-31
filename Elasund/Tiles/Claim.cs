@@ -12,7 +12,14 @@ namespace Elasund.Tiles
    /// </summary>
    public class Claim : Tiles.Tile
    {
-		public int _number;
+      /// <summary>
+      /// Value of claim
+      /// </summary>
+      public int Value
+      {
+         get;
+         set;
+      }
 
 		/// <summary>
 		/// Конструктор устанавливающий цену заявки
@@ -20,11 +27,19 @@ namespace Elasund.Tiles
 		/// <param name="parNumber"></param>
 		/// <param name="parTexture"></param>
 		/// <param name="parColor"></param>
-      //public Claim(int parNumber, Texture2D parTexture, ColorPlayer parColor)
-      //   : base(parTexture)
-      //{
-      //   _number = parNumber;
-      //   Color = parColor;
-      //}
+      public Claim(int parNumber, ColorPlayer parColor)
+      {
+         Value = parNumber;
+         ColorPlayer = parColor;
+      }
+
+      /// <summary>
+      /// Draw claim
+      /// </summary>
+      /// <param name="spriteBatch">SpriteBatch</param>
+      public override void Draw(SpriteBatch spriteBatch)
+      {
+         spriteBatch.Draw(ContentPack.ClaimTexture[(int)ColorPlayer, Value], Rectangle, Color.White);
+      }
 	}
 }

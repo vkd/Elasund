@@ -24,11 +24,11 @@ namespace Elasund.Tiles
       /// <summary>
       /// Color
       /// </summary>
-      //public ColorPlayer Color
-      //{
-      //   get;
-      //   set;
-      //}
+      public ColorPlayer ColorPlayer
+      {
+         get;
+         set;
+      }
 
 		/// <summary>
 		/// Установить позицию

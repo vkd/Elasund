@@ -131,12 +131,7 @@ namespace Elasund
          //   //   break;
 
          //   case GameAction.Starting:
-         //      foreach (BasePlayer p in players)
-         //      {
-         //         map.AddStartBuildingOfPlayers(p._color);
-         //      }
-
-         //      map.AddAllBuilding();
+         //      
 
          //      Income();
 

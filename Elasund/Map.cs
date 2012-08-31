@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Elasund.Tiles;
 
 namespace Elasund
 {
@@ -16,14 +17,17 @@ namespace Elasund
       /// </summary>
       int quantityPlayers = 0;
 
+      /// <summary>
+      /// It's needed for point of mills
+      /// </summary>
       int[] positionsPlayersOnMills;
 
-      ////Построенные здания
-      //public List<Tile> buildings;
-      ////Здания в резерве
-      //public List<List<Building>> reserves;
-      ////Заявки в резерве
-      //public List<List<Claim>> claimsReserves;
+      //Построенные здания
+      public List<Tile> releasedBuildings;
+      //Здания в резерве
+      public List<List<Building>> buildingsReserve;
+      //Заявки в резерве
+      public List<List<Claim>> claimssReserve;
 
 
       ///// <summary>
@@ -54,15 +58,18 @@ namespace Elasund
          for (int i = 0; i < Constants.MAX_PLAYERS; ++i)
             positionsPlayersOnMills[i] = -1;
 
-         //buildings = new List<Tile>();
+         //===================================
+         //Initialize lists
+         releasedBuildings = new List<Tile>();
 
-         //reserves = new List<List<Building>>();
-         //for (int i = 0; i < Constants.QUANTITY_BUILDINGS; i++)
-         //   reserves.Add(new List<Building>());
+         buildingsReserve = new List<List<Building>>();
+         for (int i = 0; i < Constants.QUANTITY_BUILDINGS; i++)
+            buildingsReserve.Add(new List<Building>());
 
-         //claimsReserves = new List<List<Claim>>();
-         //for (int i = 0; i < 5; i++)
-         //   claimsReserves.Add(new List<Claim>());
+         claimssReserve = new List<List<Claim>>();
+         for (int i = 0; i < 5; i++)
+            claimssReserve.Add(new List<Claim>());
+         //==================================
 
          quantityPlayers = 0;
          for (int i = 0; i < Constants.MAX_PLAYERS; ++i)
@@ -72,120 +79,115 @@ namespace Elasund
                ++quantityPlayers;
                positionsPlayersOnMills[i] = gamers[i];
             }
+
+         foreach (Player p in players)
+         {
+            AddStartBuildingAndClaimsOfPlayers(p.Color);
+         }
+
+         AddAllBuilding();
       }
 
       /// <summary>
-      /// Построить стартовые здания
+      /// Add стартовые здания
       /// </summary>
       /// <param name="gamers"></param>
-      public void AddStartBuildingOfPlayers(ColorPlayer parColor)
+      public void AddStartBuildingAndClaimsOfPlayers(ColorPlayer parColor)
       {
-         AddPlayersBuilding(parColor);
-         quantityPlayers++;
-
+         AddPlayersBuildingAndClaimInReserve(parColor);
          PlaceStartBuilding(parColor);
       }
 
       /// <summary>
       /// Добавить все здания в резерв, кроме построек для игроков
       /// </summary>
-      //public void AddAllBuilding()
-      //{
-      //   for (int i = 0; i < 9; i++)
-      //      reserves[(int)Buildings.Church].Add(
-      //         new Building(Buildings.Church, ContentPack.BuildingsTexture[(int)Buildings.Church][i], cubeTexture));
+      public void AddAllBuilding()
+      {
+         for (int i = 0; i < 9; i++)
+            buildingsReserve[(int)Buildings.Church].Add(
+               new Building(Buildings.Church, i));
 
-      //   for (int i = 0; i < 4; i++)
-      //   {
-      //      reserves[(int)Buildings.DrawWell].Add(
-      //         new Building(Buildings.DrawWell, ContentPack.BuildingsTexture[(int)Buildings.DrawWell][0], cubeTexture));
-      //      reserves[(int)Buildings.Fair].Add(
-      //         new Building(Buildings.Fair, ContentPack.BuildingsTexture[(int)Buildings.Fair][0], cubeTexture));
-      //      reserves[(int)Buildings.Hotel].Add(
-      //         new Building(Buildings.Hotel, ContentPack.BuildingsTexture[(int)Buildings.Hotel][0], cubeTexture));
-      //      reserves[(int)Buildings.Shop].Add(
-      //         new Building(Buildings.Shop, ContentPack.BuildingsTexture[(int)Buildings.Shop][0], cubeTexture));
-      //   }
-      //   reserves[(int)Buildings.Hotel].Add(
-      //      new Building(Buildings.Hotel, ContentPack.BuildingsTexture[(int)Buildings.Hotel][0], cubeTexture));
-      //   reserves[(int)Buildings.Shop].Add(
-      //      new Building(Buildings.Shop, ContentPack.BuildingsTexture[(int)Buildings.Shop][0], cubeTexture));
+         for (int i = 0; i < 4; i++)
+         {
+            buildingsReserve[(int)Buildings.DrawWell].Add(new Building(Buildings.DrawWell, 0));
+            buildingsReserve[(int)Buildings.Fair].Add(new Building(Buildings.Fair, 0));
+            buildingsReserve[(int)Buildings.Hotel].Add(new Building(Buildings.Hotel, 0));
+            buildingsReserve[(int)Buildings.Shop].Add(new Building(Buildings.Shop, 0));
+         }
+         buildingsReserve[(int)Buildings.Hotel].Add(new Building(Buildings.Hotel, 0));
+         buildingsReserve[(int)Buildings.Shop].Add(new Building(Buildings.Shop, 0));
 
-      //   for (int i = 0; i < 3; i++)
-      //      reserves[(int)Buildings.Government].Add(
-      //         new Building(Buildings.Government, ContentPack.BuildingsTexture[(int)Buildings.Government][i], cubeTexture));
-      //}
+         for (int i = 0; i < 3; i++)
+            buildingsReserve[(int)Buildings.Government].Add(new Building(Buildings.Government, i));
+      }
 
       /// <summary>
       /// Добавить постройки игрока в резерв
       /// </summary>
       /// <param name="parColor">Цвет игрока</param>
-      void AddPlayersBuilding(ColorPlayer parColor)
+      void AddPlayersBuildingAndClaimInReserve(ColorPlayer parColor)
       {
          for (int j = 0; j <= Constants.MAX_COST_CLAIM; j++)
          {
-            claimsReserves[(int)parColor].Add(
-               new Claim(j, parColor));
+            claimssReserve[(int)parColor].Add(new Claim(j, parColor));
          }
 
-         reserves[(int)Buildings.House].Add(
-            new Building(Buildings.House, buildingsTexture[(int)Buildings.House][(int)parColor], cubeTexture));
-         reserves[(int)Buildings.WorkShop].Add(
-            new Building(Buildings.WorkShop, buildingsTexture[(int)Buildings.WorkShop][(int)parColor], cubeTexture));
+         buildingsReserve[(int)Buildings.House].Add(
+            new Building(Buildings.House, (int)parColor));
+         buildingsReserve[(int)Buildings.WorkShop].Add(
+            new Building(Buildings.WorkShop, (int)parColor));
       }
 
       /// <summary>
       /// Разместить на поле стартовые здания
       /// </summary>
-      //void PlaceStartBuilding(ColorPlayer parColor)
-      //{
-      //Building buildingTemp;
+      void PlaceStartBuilding(ColorPlayer parColor)
+      {
+         Building buildingTemp;
 
-      //buildingTemp = new Building(Buildings.SmallTotem,
-      //   buildingsTexture[(int)Buildings.SmallTotem][(int)parColor], cubeTexture);
+         buildingTemp = new Building(Buildings.SmallTotem, (int)parColor);
 
-      //switch (parColor)
-      //{
-      //   case ColorPlayer.Red:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(3), GetY(2), parColor));
-      //      break;
-      //   case ColorPlayer.Green:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(3), GetY(7), parColor));
-      //      break;
-      //   case ColorPlayer.Blue:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(2), GetY(2), parColor));
-      //      break;
-      //   case ColorPlayer.Yellow:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(2), GetY(7), parColor));
-      //      break;
-      //}
+         switch (parColor)
+         {
+            case ColorPlayer.Red:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(3), GetY(2), parColor));
+               break;
+            case ColorPlayer.Green:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(3), GetY(7), parColor));
+               break;
+            case ColorPlayer.Blue:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(2), GetY(2), parColor));
+               break;
+            case ColorPlayer.Yellow:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(2), GetY(7), parColor));
+               break;
+         }
 
-      //buildingTemp = new Building(Buildings.Totem,
-      //   buildingsTexture[(int)Buildings.Totem][(int)parColor], cubeTexture);
+         buildingTemp = new Building(Buildings.Totem, (int)parColor);
 
-      //switch (parColor)
-      //{
-      //   case ColorPlayer.Red:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(4), GetY(5), parColor));
-      //      break;
-      //   case ColorPlayer.Green:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(4), GetY(3), parColor));
-      //      break;
-      //   case ColorPlayer.Blue:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(1), GetY(5), parColor));
-      //      break;
-      //   case ColorPlayer.Yellow:
-      //      buildings.Add(buildingTemp.SetPositionAndColor(GetX(1), GetY(3), parColor));
-      //      break;
-      //}
-      //}
+         switch (parColor)
+         {
+            case ColorPlayer.Red:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(4), GetY(5), parColor));
+               break;
+            case ColorPlayer.Green:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(4), GetY(3), parColor));
+               break;
+            case ColorPlayer.Blue:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(1), GetY(5), parColor));
+               break;
+            case ColorPlayer.Yellow:
+               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(1), GetY(3), parColor));
+               break;
+         }
+      }
 
       /// <summary>
       /// Get color from array of colors of players
       /// </summary>
       /// <param name="parColor">Color of player</param>
       /// <returns>Color</returns>
-      private Color GetColor(ColorPlayer parColor)
+      public static Color GetColor(ColorPlayer parColor)
       {
          switch (parColor)
          {
@@ -230,13 +232,18 @@ namespace Elasund
          }
       }
 
-      //private void DrawBuildings(SpriteBatch spriteBatch)
-      //{
-      //   foreach (Building b in buildings)
-      //   {
-      //      b.Draw(spriteBatch);
-      //   }
-      //}
+
+      /// <summary>
+      /// Draw all release buildings
+      /// </summary>
+      /// <param name="spriteBatch"></param>
+      private void DrawBuildings(SpriteBatch spriteBatch)
+      {
+         foreach (Building b in releasedBuildings)
+         {
+            b.Draw(spriteBatch);
+         }
+      }
 
       /// <summary>
       /// Количество мельниц при данном здании
@@ -300,8 +307,8 @@ namespace Elasund
 
 
 
-         ////здания
-         //DrawBuildings(spriteBatch);
+         //здания
+         DrawBuildings(spriteBatch);
 
       }
    }

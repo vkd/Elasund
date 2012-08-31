@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Elasund {
+namespace Elasund
+{
    /// <summary>
    /// Игрок
    /// </summary>
-   public class Player {
+   public class Player
+   {
 
       /// <summary>
       /// Color of player
@@ -45,53 +47,53 @@ namespace Elasund {
          Score = 10;
       }
 
-//      private int _mill;
-//      /// <summary>
-//      /// Мельницы игрока
-//      /// </summary>
-//      public int Mill
-//      {
-//         get { return _mill; }
-//         set
-//         {
-//            int old = _mill;
-//            _mill += value;
+      //      private int _mill;
+      //      /// <summary>
+      //      /// Мельницы игрока
+      //      /// </summary>
+      //      public int Mill
+      //      {
+      //         get { return _mill; }
+      //         set
+      //         {
+      //            int old = _mill;
+      //            _mill += value;
 
-//            if (old < _mill)
-//            {
-//               for (int i = old; i <= _mill; i++)
-//               {
-//                  switch (i)
-//                  {
-//                     case 3:
-//                     case 5:
-//                     case 7:
-//                     case 9:
-//                     case 11:
-//                        _score++;
-//                        break;
-//                  }
-//               }
-//            }
-//            else if (old > _mill)
-//            {
-//               for (int i = old; i >= _mill; i--)
-//               {
-//                  switch (i)
-//                  {
-//                     case 2:
-//                     case 4:
-//                     case 6:
-//                     case 8:
-//                     case 10:
-//                        _score--;
-//                        break;
-//                  }
-//               }
-//            }
-//         }
-//      }
+      //            if (old < _mill)
+      //            {
+      //               for (int i = old; i <= _mill; i++)
+      //               {
+      //                  switch (i)
+      //                  {
+      //                     case 3:
+      //                     case 5:
+      //                     case 7:
+      //                     case 9:
+      //                     case 11:
+      //                        _score++;
+      //                        break;
+      //                  }
+      //               }
+      //            }
+      //            else if (old > _mill)
+      //            {
+      //               for (int i = old; i >= _mill; i--)
+      //               {
+      //                  switch (i)
+      //                  {
+      //                     case 2:
+      //                     case 4:
+      //                     case 6:
+      //                     case 8:
+      //                     case 10:
+      //                        _score--;
+      //                        break;
+      //                  }
+      //               }
+      //            }
+      //         }
+      //      }
 
 
-	}
+   }
 }

@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasePlayer.cs" />
-    <Compile Include="Building.cs" />
+    <Compile Include="Tiles\Building.cs" />
     <Compile Include="Tiles\Claim.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContentPack.cs" />
