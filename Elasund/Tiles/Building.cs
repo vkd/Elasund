@@ -43,9 +43,7 @@ namespace Elasund.Tiles
       /// </summary>
       /// <param name="x">Х координата</param>
       /// <param name="y">У координата</param>
-      /// <param name="color">Цвет игрока</param>
-      /// <returns>Само построенное здание</returns>
-      public Building SetPositionAndColor(int x, int y, ColorPlayer parColor)
+      public void SetPosition(int x, int y)
       {
          switch (BuildingType)
          {
@@ -68,8 +66,6 @@ namespace Elasund.Tiles
                Rectangle = new Rectangle(x, y, 50, 50);
                break;
          }
-         ColorPlayer = parColor;
-         return this;
       }
 
 

@@ -37,6 +37,15 @@ namespace Elasund
       }
 
       /// <summary>
+      /// Top number of wall
+      /// </summary>
+      public int WallOfSity
+      {
+         get;
+         set;
+      }
+
+      /// <summary>
       /// Constructor, which set color of player
       /// </summary>
       /// <param name="parColor">Color</param>

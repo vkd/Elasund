@@ -97,7 +97,7 @@ namespace Elasund
          return rand.Next(3);
       }
 
-      public void ImWin(BasePlayer parPlayers)
+      public void ImWin()
       {
          //TODO типа я говорю что выйграл, надо проверить и остановить игру
       }

@@ -61,7 +61,7 @@ namespace Elasund
          playersConfig[3] = -1;// (int)ColorPlayer.Yellow;
 
          map = new Map(playersConfig);
-         io = new IO(this);
+         io = new IO(this, map);
          //referee = new Referee(map, playersConfig);
 
          base.Initialize();
@@ -245,61 +245,7 @@ namespace Elasund
 
 
 
-      //      /// <summary>
-      //      /// Добавить здание в таблицу
-      //      /// </summary>
-      //      /// <param name="buildingType">Тип строения</param>
-      //      private void AddToTableOfBuildings(Building parBuilding, ref int x, ref int y, ref int dy)//, Buildings buildingType)
-      //      {
-      //         Texture2D texture = buildingsTexture[(int)parBuilding.BuildingType][0];
-      //         if (x - texture.Width - 1 < __BOARD_WIDTH)
-      //         {
-      //            y += dy + 15;
-      //            x = graphics.PreferredBackBufferWidth - 10;
-      //            dy = texture.Height;
-      //         }
-      //         x -= texture.Width;
-      //         //spriteBatch.Draw(buildingsTexture[(int)buildingType][0], new Vector2(x, y), Color.White);
-      //         _tempBuildings.Add(parBuilding);
-      //         _tempBuildings[_tempBuildings.Count - 1].Rect = new Rectangle(x, y, texture.Width, texture.Height);
-      //         x -= 15;
-      //         if (dy < texture.Height)
-      //            dy = texture.Height;
-      //      }
-
-      //      /// <summary>
-      //      /// Создание таблицы доступных для строительства зданий
-      //      /// </summary>
-      //      private void CreateTableOfBuildings()
-      //      {
-      //         int x = graphics.PreferredBackBufferWidth - 10;
-      //         int y = 10;
-      //         int dy = 0;
-
-      //         _tempBuildings.Clear();
-
-      //         if (map.reserves[(int)Buildings.Government].Count != 0)
-      //            AddToTableOfBuildings(map.reserves[(int)Buildings.Government][0], ref x, ref y, ref dy);//, Buildings.Government);
-      //         if (map.reserves[(int)Buildings.Hotel].Count != 0)
-      //            AddToTableOfBuildings(map.reserves[(int)Buildings.Hotel][0], ref x, ref y, ref dy);//, Buildings.Hotel);
-      //         if (map.reserves[(int)Buildings.Shop].Count != 0)
-      //            AddToTableOfBuildings(map.reserves[(int)Buildings.Shop][0], ref x, ref y, ref dy);//, Buildings.Shop);
-      //         if (map.reserves[(int)Buildings.Fair].Count != 0)
-      //            AddToTableOfBuildings(map.reserves[(int)Buildings.Fair][0], ref x, ref y, ref dy);//, Buildings.Fair);
-      //         if (map.reserves[(int)Buildings.DrawWell].Count != 0)
-      //            AddToTableOfBuildings(map.reserves[(int)Buildings.DrawWell][0], ref x, ref y, ref dy);//, Buildings.DrawWell);
-
-      //         foreach (Building tempBuilding in map.reserves[(int)Buildings.House] )// map.CurrentPlayer.building)
-      //         {
-      //            if (tempBuilding.Color == map.CurrentPlayer.Color)
-      //               AddToTableOfBuildings(tempBuilding, ref x, ref y, ref dy);//, tempBuilding.BuildingType);
-      //         }
-      //         foreach (Building tempBuilding in map.reserves[(int)Buildings.WorkShop])// map.CurrentPlayer.building)
-      //         {
-      //            if (tempBuilding.Color == map.CurrentPlayer.Color)
-      //               AddToTableOfBuildings(tempBuilding, ref x, ref y, ref dy);//, tempBuilding.BuildingType);
-      //         }
-      //      }
+      
 
       /// <summary>
       /// This is called when the game should draw itself.

@@ -19,5 +19,10 @@
       /// Enable fullscreen mode
       /// </summary>
       public static bool FULL_SCREEN = false;
+
+      /// <summary>
+      /// Board width
+      /// </summary>
+      public static int BOARD_WIDTH = 673;
    }
 }

@@ -30,6 +30,15 @@ namespace Elasund
       public List<List<Claim>> claimssReserve;
 
 
+      /// <summary>
+      /// Color of current player
+      /// </summary>
+      public ColorPlayer CurrentPlayer
+      {
+         get;
+         set;
+      }
+
       ///// <summary>
       ///// Кораблик пиратский
       ///// </summary>
@@ -86,6 +95,7 @@ namespace Elasund
          }
 
          AddAllBuilding();
+         CreateTableOfBuildings();
       }
 
       /// <summary>
@@ -146,40 +156,45 @@ namespace Elasund
          Building buildingTemp;
 
          buildingTemp = new Building(Buildings.SmallTotem, (int)parColor);
+         buildingTemp.ColorPlayer = parColor;
 
          switch (parColor)
          {
             case ColorPlayer.Red:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(3), GetY(2), parColor));
+               buildingTemp.SetPosition(GetX(3), GetY(2));
                break;
             case ColorPlayer.Green:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(3), GetY(7), parColor));
+               buildingTemp.SetPosition(GetX(3), GetY(7));
                break;
             case ColorPlayer.Blue:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(2), GetY(2), parColor));
+               buildingTemp.SetPosition(GetX(2), GetY(2));
                break;
             case ColorPlayer.Yellow:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(2), GetY(7), parColor));
+               buildingTemp.SetPosition(GetX(2), GetY(7));
                break;
          }
+
+         releasedBuildings.Add(buildingTemp);
 
          buildingTemp = new Building(Buildings.Totem, (int)parColor);
+         buildingTemp.ColorPlayer = parColor;
 
          switch (parColor)
          {
             case ColorPlayer.Red:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(4), GetY(5), parColor));
+               buildingTemp.SetPosition(GetX(4), GetY(5));
                break;
             case ColorPlayer.Green:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(4), GetY(3), parColor));
+               buildingTemp.SetPosition(GetX(4), GetY(3));
                break;
             case ColorPlayer.Blue:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(1), GetY(5), parColor));
+               buildingTemp.SetPosition(GetX(1), GetY(5));
                break;
             case ColorPlayer.Yellow:
-               releasedBuildings.Add(buildingTemp.SetPositionAndColor(GetX(1), GetY(3), parColor));
+               buildingTemp.SetPosition(GetX(1), GetY(3));
                break;
          }
+         releasedBuildings.Add(buildingTemp);
       }
 
       /// <summary>
@@ -243,6 +258,14 @@ namespace Elasund
          {
             b.Draw(spriteBatch);
          }
+
+         foreach (List<Building> list in buildingsReserve)
+         {
+            foreach (Building b in list)
+            {
+               b.Draw(spriteBatch);
+            }
+         }
       }
 
       /// <summary>
@@ -283,6 +306,90 @@ namespace Elasund
       }
 
       /// <summary>
+      /// Добавить здание в таблицу
+      /// </summary>
+      /// <param name="buildingType">Тип строения</param>
+      private void AddToTableOfBuildings(Building parBuilding, ref int x, ref int y, ref int dy)
+      {
+         int textureWidth;
+         int textureHeight;
+
+         switch (parBuilding.BuildingType)
+         {
+            case Buildings.Government:
+               textureWidth = 100;
+               textureHeight = 150;
+               break;
+            case Buildings.Hotel:
+            case Buildings.Shop:
+               textureWidth = 100;
+               textureHeight = 100;
+               break;
+            case Buildings.Fair:
+            case Buildings.House:
+               textureWidth = 100;
+               textureHeight = 50;
+               break;
+            case Buildings.Totem:
+            case Buildings.WorkShop:
+               textureWidth = 50;
+               textureHeight = 100;
+               break;
+            default:
+               textureWidth = 50;
+               textureHeight = 50;
+               break;
+         }
+
+         if (x - textureWidth - 1 < Settings.BOARD_WIDTH)
+         {
+            y += dy + 15;
+            x = Settings.SCREEN_WIDTH - 10;// graphics.PreferredBackBufferWidth - 10;
+            dy = textureHeight;
+         }
+         x -= textureWidth;
+
+
+         parBuilding.SetPosition(x, y);
+
+         x -= 15;
+         if (dy < textureHeight)
+            dy = textureHeight;
+      }
+
+      /// <summary>
+      /// Создание таблицы доступных для строительства зданий
+      /// </summary>
+      private void CreateTableOfBuildings()
+      {
+         int x = Settings.SCREEN_WIDTH - 10;// graphics.PreferredBackBufferWidth - 10;
+         int y = 10;
+         int dy = 0;
+
+         if (buildingsReserve[(int)Buildings.Government].Count != 0)
+            AddToTableOfBuildings(buildingsReserve[(int)Buildings.Government][0], ref x, ref y, ref dy);//, Buildings.Government);
+         if (buildingsReserve[(int)Buildings.Hotel].Count != 0)
+            AddToTableOfBuildings(buildingsReserve[(int)Buildings.Hotel][0], ref x, ref y, ref dy);//, Buildings.Hotel);
+         if (buildingsReserve[(int)Buildings.Shop].Count != 0)
+            AddToTableOfBuildings(buildingsReserve[(int)Buildings.Shop][0], ref x, ref y, ref dy);//, Buildings.Shop);
+         if (buildingsReserve[(int)Buildings.Fair].Count != 0)
+            AddToTableOfBuildings(buildingsReserve[(int)Buildings.Fair][0], ref x, ref y, ref dy);//, Buildings.Fair);
+         if (buildingsReserve[(int)Buildings.DrawWell].Count != 0)
+            AddToTableOfBuildings(buildingsReserve[(int)Buildings.DrawWell][0], ref x, ref y, ref dy);//, Buildings.DrawWell);
+
+         foreach (Building building in buildingsReserve[(int)Buildings.House])// map.CurrentPlayer.building)
+         {
+            if (building.ColorPlayer == CurrentPlayer)
+               AddToTableOfBuildings(building, ref x, ref y, ref dy);//, tempBuilding.BuildingType);
+         }
+         foreach (Building building in buildingsReserve[(int)Buildings.WorkShop])// map.CurrentPlayer.building)
+         {
+            if (building.ColorPlayer == CurrentPlayer)
+               AddToTableOfBuildings(building, ref x, ref y, ref dy);//, tempBuilding.BuildingType);
+         }
+      }
+
+      /// <summary>
       /// Рисуем карту со всякими зданиями на ней
       /// </summary>
       /// <param name="spriteBatch">Системная переменная</param>
@@ -298,9 +405,9 @@ namespace Elasund
          //очки
          DrawPoints(spriteBatch);
 
-         ////церковь
-         //for (int i = 0; i < reserves[(int)Buildings.Church].Count; i++)
-         //   spriteBatch.Draw(church0Texture, new Vector2(259 + 2 * i, 23 - 2 * i), Color.White);
+         //церковь
+         for (int i = 0; i < buildingsReserve[(int)Buildings.Church].Count; i++)
+            spriteBatch.Draw(ContentPack.BacksideChurchTexture, new Vector2(259 + 2 * i, 23 - 2 * i), Color.White);
 
          ////кораблик
          //spriteBatch.Draw(shipTexture, new Vector2(GetX(-1) - 16, GetY(_shipIndex) + 3), _shipIsRed ? Color.Red : Color.White);
