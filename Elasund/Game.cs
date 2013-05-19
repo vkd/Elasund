@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Windows.Forms;
+using System;
+using System.Drawing;
 
 namespace Elasund
 {
@@ -33,8 +36,12 @@ namespace Elasund
             Settings.FULL_SCREEN = false;
          }
 
+
          graphics = new GraphicsDeviceManager(this);
          Content.RootDirectory = "Content";
+
+         //graphics.SynchronizeWithVerticalRetrace = false;
+
          graphics.PreferredBackBufferWidth = Settings.SCREEN_WIDTH;
          graphics.PreferredBackBufferHeight = Settings.SCREEN_HEIGHT;
          this.Window.Title = Constants.NAME_GAME;
@@ -98,6 +105,12 @@ namespace Elasund
             System.Windows.Forms.MessageBox.Show(e.Message);
          }
 
+         Bitmap cur = new Bitmap("Cursor.png", true);
+         Graphics g = Graphics.FromImage(cur);
+         IntPtr ptr = cur.GetHicon();
+         Cursor c = new Cursor(ptr);
+         Form.FromHandle(this.Window.Handle).Cursor = c;
+         this.IsMouseVisible = true;
       }
 
       /// <summary>
@@ -253,7 +266,7 @@ namespace Elasund
       /// <param name="gameTime">Provides a snapshot of timing values.</param>
       protected override void Draw(GameTime gameTime)
       {
-         GraphicsDevice.Clear(Color.CornflowerBlue);
+         GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.CornflowerBlue);
 
          spriteBatch.Begin();
 

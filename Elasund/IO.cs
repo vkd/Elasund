@@ -170,7 +170,7 @@ namespace Elasund
 
 
          //Draw mouse cursor
-         spriteBatch.Draw(ContentPack.CursorTexture, mouseVector, Color.White);
+         //spriteBatch.Draw(ContentPack.CursorTexture, mouseVector, Color.White);
 
          //Draw debug info
          if (showDebugInfo)
