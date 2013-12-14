@@ -44,6 +44,7 @@ namespace Elasund
 
          graphics.PreferredBackBufferWidth = Settings.SCREEN_WIDTH;
          graphics.PreferredBackBufferHeight = Settings.SCREEN_HEIGHT;
+
          this.Window.Title = Constants.NAME_GAME;
          if (Settings.FULL_SCREEN)
             graphics.ToggleFullScreen();
@@ -86,8 +87,6 @@ namespace Elasund
          try
          {
             ContentPack.MainFont = Content.Load<SpriteFont>("SpriteFont");
-
-            ContentPack.CursorTexture = Content.Load<Texture2D>("Cursor");
 
             LoadBuildings();
             LoadClaims();
