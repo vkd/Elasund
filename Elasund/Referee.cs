@@ -19,8 +19,8 @@ namespace Elasund
 
       //int currentPlayer;
 
-      //public Referee(Map parMap, int[] parPlayers)
-      //{
+      public Referee()
+      {
       //   map = parMap;
 
       //   //Инициализация игрового режима
@@ -45,7 +45,7 @@ namespace Elasund
       //      }
 
       //   currentPlayer = 0;
-      //}
+      }
 
       /// <summary>
       /// Построить здание

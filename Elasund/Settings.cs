@@ -1,28 +1,11 @@
 ﻿namespace Elasund
 {
-   /// <summary>
-   /// Settings of game
-   /// </summary>
-   public class Settings
-   {
-      /// <summary>
-      /// Screen width
-      /// </summary>
-      public static int SCREEN_WIDTH = 1024;
+    public class Settings
+    {
+        public static int SCREEN_WIDTH = 1024;
+        public static int SCREEN_HEIGHT = 768;
 
-      /// <summary>
-      /// Screen height
-      /// </summary>
-      public static int SCREEN_HEIGHT = 768;
+        public static bool FULL_SCREEN = false;
 
-      /// <summary>
-      /// Enable fullscreen mode
-      /// </summary>
-      public static bool FULL_SCREEN = false;
-
-      /// <summary>
-      /// Board width
-      /// </summary>
-      public static int BOARD_WIDTH = 673;
-   }
+    }
 }
