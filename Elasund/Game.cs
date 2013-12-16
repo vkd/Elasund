@@ -1,26 +1,28 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Windows.Forms;
-using System;
+﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Elasund
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
         IO io;
+
+        SpriteBatch spriteBatch;
 
         public Game()
         {
             if (Constants.FORM_LOAD_ELASUND)
             {
+#if !DEBUG
                 FormLoadGame formLoadGame = new FormLoadGame();
                 formLoadGame.ShowDialog();
                 if (formLoadGame.DialogResult == System.Windows.Forms.DialogResult.Cancel)
                     this.Exit();
+#endif
             }
             else
             {
@@ -28,7 +30,6 @@ namespace Elasund
                 Settings.SCREEN_HEIGHT = 768;
                 Settings.FULL_SCREEN = false;
             }
-
 
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -53,8 +54,8 @@ namespace Elasund
                 ColorPlayer.Yellow
             };
 
-            io = new IO(this, Core.Elasund.Initialize(players));
-            
+            io = new IO(this, new Core.Elasund(players));
+
             base.Initialize();
         }
 
@@ -64,18 +65,7 @@ namespace Elasund
 
             try
             {
-                ContentPack.MainFont = Content.Load<SpriteFont>("SpriteFont");
-
-                LoadBuildings();
-                LoadClaims();
-
-                ContentPack.CubeTexture = Content.Load<Texture2D>("Textures/Cube");
-                ContentPack.PointTexture = Content.Load<Texture2D>("Textures/Point");
-                ContentPack.MapTexture = Content.Load<Texture2D>("Textures/Board");
-                ContentPack.TopCornerTexture = Content.Load<Texture2D>("Textures/Corner1");
-                ContentPack.BottomCornerTexture = Content.Load<Texture2D>("Textures/Corner2");
-                ContentPack.BacksideChurchTexture = Content.Load<Texture2D>("Textures/Church0");
-                ContentPack.ShipTexture = Content.Load<Texture2D>("Textures/Ship");
+                ContentPack.LoadContent(Content);
             }
             catch (Microsoft.Xna.Framework.Content.ContentLoadException e)
             {
@@ -88,39 +78,6 @@ namespace Elasund
             Cursor c = new Cursor(ptr);
             Form.FromHandle(this.Window.Handle).Cursor = c;
             this.IsMouseVisible = true;
-        }
-
-        private void LoadBuildings()
-        {
-            for (int i = 0; i < 9; ++i)
-            {
-                ContentPack.BuildingsTexture[(int)Buildings.Church][i] = Content.Load<Texture2D>("Textures/Buildings/Church" + (i + 1));
-            }
-            ContentPack.BuildingsTexture[(int)Buildings.DrawWell][0] = Content.Load<Texture2D>("Textures/Buildings/DrawWell");
-            ContentPack.BuildingsTexture[(int)Buildings.Fair][0] = Content.Load<Texture2D>("Textures/Buildings/Fair");
-            for (int i = 0; i < 3; ++i)
-                ContentPack.BuildingsTexture[(int)Buildings.Government][i] = Content.Load<Texture2D>("Textures/Buildings/Government" + (i + 1));
-            ContentPack.BuildingsTexture[(int)Buildings.Hotel][0] = Content.Load<Texture2D>("Textures/Buildings/Hotel");
-            for (int i = 0; i < 4; ++i)
-                ContentPack.BuildingsTexture[(int)Buildings.House][i] = Content.Load<Texture2D>("Textures/Buildings/House" + i);
-            ContentPack.BuildingsTexture[(int)Buildings.Shop][0] = Content.Load<Texture2D>("Textures/Buildings/Shop");
-            for (int i = 0; i < 4; ++i)
-            {
-                ContentPack.BuildingsTexture[(int)Buildings.SmallTotem][i] = Content.Load<Texture2D>("Textures/Buildings/SmallTotem" + i);
-                ContentPack.BuildingsTexture[(int)Buildings.Totem][i] = Content.Load<Texture2D>("Textures/Buildings/Totem" + i);
-                ContentPack.BuildingsTexture[(int)Buildings.WorkShop][i] = Content.Load<Texture2D>("Textures/Buildings/WorkShop" + i);
-            }
-        }
-
-        private void LoadClaims()
-        {
-            for (int i = 0; i <= Constants.MAX_COST_CLAIM; ++i)
-            {
-                ContentPack.ClaimTexture[0, i] = Content.Load<Texture2D>("Textures/Claims/r" + i);
-                ContentPack.ClaimTexture[1, i] = Content.Load<Texture2D>("Textures/Claims/g" + i);
-                ContentPack.ClaimTexture[2, i] = Content.Load<Texture2D>("Textures/Claims/b" + i);
-                ContentPack.ClaimTexture[3, i] = Content.Load<Texture2D>("Textures/Claims/y" + i);
-            }
         }
 
         protected override void UnloadContent()

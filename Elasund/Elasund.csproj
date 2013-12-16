@@ -121,8 +121,8 @@
     <Compile Include="InputManager\InputAction.cs" />
     <Compile Include="InputManager\InputManager.cs" />
     <Compile Include="InputManager\KeyboardManager.cs" />
-    <Compile Include="Tiles\Building.cs" />
-    <Compile Include="Tiles\Claim.cs" />
+    <Compile Include="Core\Tiles\Building.cs" />
+    <Compile Include="Core\Tiles\Claim.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="ContentPack.cs" />
     <Compile Include="Enums.cs" />
@@ -140,7 +140,6 @@
     <Compile Include="Game.cs" />
     <Compile Include="Referee.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Tiles\Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cursor.png">

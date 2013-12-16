@@ -1,7 +1,7 @@
-﻿using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
+﻿using System;
 using System.Collections.Generic;
-using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
 namespace Elasund.InputManager
 {

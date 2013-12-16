@@ -11,7 +11,7 @@
     //    Starting
     //}
 
-    public enum Buildings
+    public enum BuildingType
     {
         Church, DrawWell, Fair, Government, Hotel, Shop, House, SmallTotem, Totem, WorkShop
     }
@@ -21,7 +21,7 @@
         Red = 0, Green = 1, Blue = 2, Yellow = 3
     }
 
-    enum ColorVotes
+    public enum ColorVotes
     {
         Green, Red, Blue
     }

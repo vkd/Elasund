@@ -1,10 +1,8 @@
-﻿using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Elasund.Tiles;
-using Elasund.Core;
+﻿using System;
 using Elasund.InputManager;
-using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace Elasund
 {
@@ -28,7 +26,7 @@ namespace Elasund
         //Vector2 _mouseGripPosition;
         Vector2 mouseVector;
 
-        bool showDebugInfo = false;
+        bool showDebugInfo = true;
 
         public IO(Game game, Core.Elasund elasund)
         {
@@ -43,7 +41,7 @@ namespace Elasund
         {
             InputManager.AddAction(InputAction.Exit, Game.Exit);
             InputManager.AddAction(InputAction.ChangeFullscreen, Game.ChangeFullScreen);
-            InputManager.AddAction(InputAction.DebugInfo, delegate() 
+            InputManager.AddAction(InputAction.DebugInfo, delegate()
             {
                 showDebugInfo = !showDebugInfo;
             });
@@ -63,7 +61,7 @@ namespace Elasund
             ama(InputAction.DecBlue, ColorPlayer.Blue, -1);
             ama(InputAction.DecGreen, ColorPlayer.Green, -1);
             ama(InputAction.DecYellow, ColorPlayer.Yellow, -1);
-            
+
         }
 
         /// <summary>
@@ -258,13 +256,40 @@ namespace Elasund
 
         private void DrawDebugInfo(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(ContentPack.MainFont, "Debug info:", new Vector2(20, 20), Color.White);
-            spriteBatch.DrawString(
-                ContentPack.MainFont, 
-                "Current player: " + Elasund.CurrentPlayer.Color.ToString(), 
-                new Vector2(20, 50), 
-                GetColor(Elasund.CurrentPlayer.Color)
-            );
+            spriteBatch.DrawString(ContentPack.MainFont, 
+                "Debug info:", 
+                new Vector2(Constants.BOARD_WIDTH + 20, 20), 
+                Color.White);
+
+            spriteBatch.DrawString(ContentPack.MainFont,
+                "Current player: " + Elasund.CurrentPlayer.Color.ToString(),
+                new Vector2(Constants.BOARD_WIDTH + 20, 40),
+                GetColor(Elasund.CurrentPlayer.Color));
+
+            for (int i = 0; i < 9; ++i)
+            {
+                spriteBatch.DrawString(ContentPack.MainFont,
+                    i.ToString(),
+                    new Vector2(GetX(i), GetY(0)),
+                    Color.White);
+            }
+            spriteBatch.DrawString(ContentPack.MainFont,
+                "x", 
+                new Vector2(GetX(9), GetY(0)), 
+                Color.WhiteSmoke);
+
+            for (int i = 0; i < 10; ++i)
+            {
+                spriteBatch.DrawString(ContentPack.MainFont,
+                    i.ToString(), 
+                    new Vector2(GetX(0), GetY(i)), 
+                    Color.White);
+            }
+            spriteBatch.DrawString(ContentPack.MainFont,
+                "y",
+                new Vector2(GetX(0), GetY(10)), 
+                Color.WhiteSmoke);
+
         }
     }
 }

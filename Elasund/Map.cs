@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
-using Elasund.Tiles;
-using Elasund.Core;
-
+﻿
 namespace Elasund
 {
     public class Map

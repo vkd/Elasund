@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-
+﻿
 namespace Elasund.Core
 {
     /// <summary>
